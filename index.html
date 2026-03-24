@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian Immigration Law | Transparent. Fixed. Filed.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink: #0e0e0e;
+    --paper: #f8f5f0;
+    --cream: #f0ebe2;
+    --gold: #b8924a;
+    --gold-light: #d4aa6a;
+    --gold-pale: #f0e6d3;
+    --slate: #3a3a3a;
+    --muted: #888;
+    --line: rgba(14,14,14,0.1);
+    --white: #ffffff;
+    --success: #2a6645;
+    --r: 0px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── LOADER ── */
+  #loader {
+    position: fixed; inset: 0;
+    background: var(--ink);
+    z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 1.5rem;
+    transition: opacity 0.6s ease 0.3s, visibility 0.6s ease 0.3s;
+  }
+  #loader.hidden { opacity: 0; visibility: hidden; }
+  .loader-wordmark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 300;
+    color: var(--paper);
+    letter-spacing: 0.15em;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+  .loader-bar {
+    width: 120px; height: 1px;
+    background: rgba(255,255,255,0.15);
+    position: relative; overflow: hidden;
+  }
+  .loader-bar::after {
+    content: '';
+    position: absolute; inset-y: 0; left: -100%;
+    width: 100%; background: var(--gold);
+    animation: barSlide 1.4s ease 0.4s forwards;
+  }
+  @keyframes barSlide { to { left: 0; } }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.5rem 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background 0.4s ease, padding 0.3s ease, box-shadow 0.3s ease;
+  }
+  nav.scrolled {
+    background: rgba(248,245,240,0.96);
+    backdrop-filter: blur(12px);
+    padding: 1rem 4rem;
+    box-shadow: 0 1px 0 var(--line);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem; font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--paper);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  nav.scrolled .nav-logo { color: var(--ink); }
+  .nav-links {
+    display: flex; align-items: center; gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.78rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(248,245,240,0.8);
+    text-decoration: none;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
+    height: 1px; background: var(--gold); transform: scaleX(0);
+    transform-origin: left; transition: transform 0.3s ease;
+  }
+  .nav-links a:hover::after { transform: scaleX(1); }
+  .nav-links a:hover { color: var(--paper); }
+  nav.scrolled .nav-links a { color: var(--slate); }
+  nav.scrolled .nav-links a:hover { color: var(--ink); }
+  .nav-cta {
+    background: var(--gold);
+    color: var(--white) !important;
+    padding: 0.6rem 1.4rem;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.1em;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--gold-light) !important; }
+  .nav-cta::after { display: none !important; }
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    cursor: pointer; padding: 4px; background: none; border: none;
+  }
+  .hamburger span {
+    display: block; width: 22px; height: 1.5px;
+    background: var(--paper); transition: background 0.3s;
+  }
+  nav.scrolled .hamburger span { background: var(--ink); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: var(--ink);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    position: relative; overflow: hidden;
+    padding: 0 4rem 5rem;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 80% 30%, rgba(184,146,74,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(184,146,74,0.06) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(248,245,240,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(248,245,240,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-eyebrow {
+    font-size: 0.72rem; font-weight: 400;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    opacity: 0; transform: translateY(20px);
+    animation: fadeUp 0.9s ease 1.4s forwards;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 300; line-height: 1.05;
+    color: var(--paper);
+    max-width: 14ch;
+    opacity: 0; transform: translateY(30px);
+    animation: fadeUp 1s ease 1.6s forwards;
+  }
+  .hero-title em {
+    font-style: italic; color: var(--gold-light);
+  }
+  .hero-sub {
+    margin-top: 1.8rem;
+    font-size: 1rem; font-weight: 300;
+    color: rgba(248,245,240,0.55);
+    max-width: 44ch; line-height: 1.65;
+    opacity: 0; transform: translateY(20px);
+    animation: fadeUp 0.9s ease 1.9s forwards;
+  }
+  .hero-actions {
+    display: flex; align-items: center; gap: 1.5rem;
+    margin-top: 2.8rem;
+    opacity: 0; transform: translateY(20px);
+    animation: fadeUp 0.9s ease 2.1s forwards;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.7rem;
+    background: var(--gold);
+    color: var(--white);
+    padding: 0.9rem 2rem;
+    font-size: 0.8rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background 0.25s ease, transform 0.2s ease;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: transparent;
+    color: rgba(248,245,240,0.65);
+    padding: 0.9rem 2rem;
+    font-size: 0.8rem; font-weight: 400;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; border: 1px solid rgba(248,245,240,0.15);
+    cursor: pointer;
+    transition: border-color 0.25s, color 0.25s, transform 0.2s;
+  }
+  .btn-ghost:hover {
+    border-color: var(--gold); color: var(--gold); transform: translateY(-2px);
+  }
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; right: 4rem;
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    opacity: 0; animation: fadeUp 0.9s ease 2.4s forwards;
+  }
+  .hero-scroll span {
+    font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(248,245,240,0.3); writing-mode: vertical-lr;
+  }
+  .scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.2); }
+  }
+
+  /* ── TRUST BAR ── */
+  .trust-bar {
+    background: var(--white);
+    border-bottom: 1px solid var(--line);
+    padding: 1.2rem 4rem;
+    display: flex; align-items: center; justify-content: center; gap: 3rem;
+    flex-wrap: wrap;
+  }
+  .trust-item {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-size: 0.78rem; font-weight: 400;
+    color: var(--slate); letter-spacing: 0.04em;
+  }
+  .trust-icon {
+    width: 18px; height: 18px;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+  .trust-sep { width: 1px; height: 20px; background: var(--line); }
+
+  /* ── SECTION BASE ── */
+  section { position: relative; }
+  .section-label {
+    font-size: 0.68rem; font-weight: 400;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300; line-height: 1.15;
+    color: var(--ink);
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+
+  /* ── HOW IT WORKS ── */
+  .how-it-works {
+    padding: 6rem 4rem;
+    background: var(--paper);
+  }
+  .hiw-header { max-width: 600px; margin-bottom: 4rem; }
+  .hiw-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--line);
+  }
+  .hiw-step {
+    padding: 3rem;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    background: var(--white);
+    transition: background 0.3s ease;
+    opacity: 0; transform: translateY(24px);
+  }
+  .hiw-step:hover { background: var(--cream); }
+  .hiw-step:nth-child(even) { border-right: none; }
+  .hiw-step:nth-last-child(-n+2) { border-bottom: none; }
+  .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem; font-weight: 300;
+    color: var(--gold-pale);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+  .step-title {
+    font-size: 1rem; font-weight: 500;
+    margin-bottom: 0.6rem; color: var(--ink);
+  }
+  .step-body {
+    font-size: 0.88rem; font-weight: 300;
+    color: var(--slate); line-height: 1.7;
+  }
+  .step-badge {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.25rem 0.75rem;
+    background: var(--gold-pale);
+    font-size: 0.7rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* ── SERVICES / PRICING ── */
+  .services {
+    padding: 6rem 4rem;
+    background: var(--cream);
+  }
+  .services-header {
+    display: flex; align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 3.5rem;
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+  .services-note {
+    font-size: 0.82rem; color: var(--muted);
+    max-width: 32ch; text-align: right; line-height: 1.5;
+  }
+  .packages-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-bottom: 2.5rem;
+  }
+  .package-card {
+    background: var(--white);
+    padding: 2.5rem 2rem;
+    position: relative;
+    transition: transform 0.3s ease, z-index 0.3s;
+    opacity: 0; transform: translateY(20px);
+  }
+  .package-card:hover { transform: translateY(-6px); z-index: 2; box-shadow: 0 20px 60px rgba(0,0,0,0.08); }
+  .package-card.featured {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .package-badge {
+    position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+    background: var(--gold); color: var(--white);
+    font-size: 0.65rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.3rem 1rem;
+  }
+  .pkg-label {
+    font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.6rem;
+  }
+  .pkg-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 400;
+    margin-bottom: 0.3rem;
+  }
+  .pkg-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem; font-weight: 300;
+    line-height: 1;
+    margin: 1.2rem 0 0.3rem;
+  }
+  .pkg-price sup {
+    font-size: 1.2rem; vertical-align: super; font-weight: 400;
+  }
+  .pkg-price-range {
+    font-size: 0.78rem; color: var(--muted); margin-bottom: 1.5rem;
+  }
+  .package-card.featured .pkg-price-range { color: rgba(248,245,240,0.5); }
+  .pkg-divider {
+    height: 1px; background: var(--line); margin: 1.5rem 0;
+  }
+  .package-card.featured .pkg-divider { background: rgba(248,245,240,0.12); }
+  .pkg-features { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+  .pkg-features li {
+    display: flex; align-items: flex-start; gap: 0.6rem;
+    font-size: 0.84rem; font-weight: 300; line-height: 1.5;
+  }
+  .pkg-features li .chk {
+    width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px;
+    color: var(--gold);
+  }
+  .package-card.featured .pkg-features li { color: rgba(248,245,240,0.8); }
+  .pkg-cta {
+    display: block; width: 100%;
+    text-align: center;
+    margin-top: 2rem;
+    padding: 0.85rem;
+    font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+  }
+  .pkg-cta-outline {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--ink);
+  }
+  .pkg-cta-outline:hover { background: var(--ink); color: var(--white); }
+  .pkg-cta-solid {
+    background: var(--gold);
+    color: var(--white);
+  }
+  .pkg-cta-solid:hover { background: var(--gold-light); }
+  .pkg-cta-ghost {
+    background: transparent;
+    color: var(--paper);
+    border: 1px solid rgba(248,245,240,0.25);
+  }
+  .pkg-cta-ghost:hover { border-color: var(--paper); background: rgba(248,245,240,0.06); }
+
+  /* Add-ons */
+  .addons {
+    border: 1px solid var(--line);
+    background: var(--white);
+    padding: 2rem;
+  }
+  .addons-title {
+    font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.5rem;
+  }
+  .addons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1px; background: var(--line);
+  }
+  .addon-item {
+    padding: 1.2rem 1.5rem;
+    background: var(--white);
+    display: flex; justify-content: space-between; align-items: center;
+    transition: background 0.2s;
+  }
+  .addon-item:hover { background: var(--gold-pale); }
+  .addon-name { font-size: 0.88rem; font-weight: 400; }
+  .addon-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 400;
+    color: var(--gold);
+  }
+
+  /* ── PROCESS TIMELINE ── */
+  .process {
+    padding: 6rem 4rem;
+    background: var(--white);
+  }
+  .process-inner {
+    max-width: 820px; margin: 0 auto;
+  }
+  .process-header { margin-bottom: 3.5rem; }
+  .timeline {
+    display: flex; flex-direction: column;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 1.5rem; top: 0; bottom: 0;
+    width: 1px; background: var(--line);
+  }
+  .tl-item {
+    display: flex; gap: 2.5rem;
+    padding-bottom: 2.5rem;
+    opacity: 0; transform: translateX(-16px);
+  }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-dot {
+    width: 3rem; height: 3rem;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; z-index: 1;
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .tl-item:hover .tl-dot { background: var(--gold-pale); border-color: var(--gold); }
+  .tl-dot-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 400; color: var(--slate);
+  }
+  .tl-content { padding-top: 0.5rem; }
+  .tl-title { font-size: 1rem; font-weight: 500; margin-bottom: 0.4rem; }
+  .tl-body { font-size: 0.85rem; color: var(--slate); line-height: 1.7; font-weight: 300; }
+  .tl-tag {
+    display: inline-block; margin-top: 0.6rem;
+    padding: 0.2rem 0.6rem;
+    background: var(--gold-pale); color: var(--gold);
+    font-size: 0.68rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+
+  /* ── GUARANTEE ── */
+  .guarantee {
+    padding: 5rem 4rem;
+    background: var(--ink);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 3rem; flex-wrap: wrap;
+  }
+  .guarantee-left { max-width: 580px; }
+  .guarantee-eyebrow {
+    font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1rem;
+  }
+  .guarantee-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
+    font-weight: 300; line-height: 1.15;
+    color: var(--paper);
+  }
+  .guarantee-body {
+    margin-top: 1.2rem;
+    font-size: 0.9rem; font-weight: 300;
+    color: rgba(248,245,240,0.6); line-height: 1.7;
+  }
+  .guarantee-card {
+    background: rgba(248,245,240,0.05);
+    border: 1px solid rgba(248,245,240,0.1);
+    padding: 2.5rem;
+    text-align: center; min-width: 240px;
+  }
+  .g-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4.5rem; font-weight: 300;
+    color: var(--gold); line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .g-label {
+    font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(248,245,240,0.5);
+  }
+
+  /* ── DOCKETWISE INTEGRATION ── */
+  .integration {
+    padding: 6rem 4rem;
+    background: var(--cream);
+  }
+  .int-inner {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: center;
+  }
+  .int-visual {
+    position: relative;
+  }
+  .int-mockup {
+    background: var(--white);
+    border: 1px solid var(--line);
+    padding: 2rem;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.06);
+  }
+  .mock-bar {
+    display: flex; align-items: center; gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .mock-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+  .mock-dot:nth-child(1) { background: #ff6b6b; }
+  .mock-dot:nth-child(2) { background: #ffd166; }
+  .mock-dot:nth-child(3) { background: #06d6a0; }
+  .mock-row {
+    height: 10px; background: var(--cream); margin-bottom: 0.7rem;
+    border-radius: 2px;
+  }
+  .mock-row.short { width: 60%; }
+  .mock-row.med { width: 80%; }
+  .mock-row.full { width: 100%; }
+  .mock-row.gold { background: var(--gold-pale); width: 45%; }
+  .mock-steps {
+    display: flex; gap: 0.5rem; margin: 1.2rem 0;
+  }
+  .mock-step {
+    flex: 1; height: 36px;
+    background: var(--cream); border-radius: 2px;
+    position: relative; overflow: hidden;
+  }
+  .mock-step.active { background: var(--gold-pale); }
+  .mock-step.active::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px; background: var(--gold);
+  }
+  .int-badge {
+    position: absolute; bottom: -1rem; right: -1rem;
+    background: var(--gold); color: var(--white);
+    padding: 0.8rem 1.2rem;
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.08em;
+  }
+  .int-content .section-title { margin-bottom: 1.2rem; }
+  .int-body {
+    font-size: 0.88rem; color: var(--slate); line-height: 1.75;
+    font-weight: 300; margin-bottom: 2rem;
+  }
+  .int-features {
+    display: flex; flex-direction: column; gap: 0.8rem;
+  }
+  .int-feature {
+    display: flex; align-items: center; gap: 0.8rem;
+    font-size: 0.85rem; font-weight: 400;
+  }
+  .int-feature-icon {
+    width: 32px; height: 32px;
+    background: var(--gold-pale);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .int-feature-icon svg { width: 14px; height: 14px; color: var(--gold); }
+
+  /* ── FAQ ── */
+  .faq {
+    padding: 6rem 4rem;
+    background: var(--white);
+  }
+  .faq-inner { max-width: 720px; margin: 0 auto; }
+  .faq-header { margin-bottom: 3rem; }
+  .faq-item {
+    border-bottom: 1px solid var(--line);
+    opacity: 0; transform: translateY(12px);
+  }
+  .faq-q {
+    width: 100%;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.4rem 0;
+    font-size: 0.95rem; font-weight: 400;
+    background: none; border: none; cursor: pointer;
+    text-align: left; color: var(--ink);
+    transition: color 0.2s;
+  }
+  .faq-q:hover { color: var(--gold); }
+  .faq-arrow {
+    width: 20px; height: 20px; flex-shrink: 0;
+    color: var(--gold);
+    transition: transform 0.3s ease;
+  }
+  .faq-item.open .faq-arrow { transform: rotate(180deg); }
+  .faq-a {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+  .faq-item.open .faq-a { max-height: 400px; }
+  .faq-a-inner {
+    padding-bottom: 1.4rem;
+    font-size: 0.88rem; font-weight: 300;
+    color: var(--slate); line-height: 1.75;
+  }
+
+  /* ── CTA SECTION ── */
+  .cta-section {
+    padding: 7rem 4rem;
+    background: var(--paper);
+    text-align: center;
+  }
+  .cta-label {
+    font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1rem;
+  }
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 300; line-height: 1.1;
+    color: var(--ink); margin-bottom: 1.2rem;
+  }
+  .cta-title em { font-style: italic; color: var(--gold); }
+  .cta-sub {
+    font-size: 0.92rem; color: var(--slate); font-weight: 300;
+    max-width: 42ch; margin: 0 auto 2.5rem; line-height: 1.65;
+  }
+  .cta-buttons {
+    display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
+  }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(14,14,14,0.6);
+    backdrop-filter: blur(6px);
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    display: flex; align-items: center; justify-content: center;
+    padding: 1.5rem;
+  }
+  .modal-overlay.open { opacity: 1; visibility: visible; }
+  .modal {
+    background: var(--white);
+    max-width: 580px; width: 100%;
+    max-height: 90vh; overflow-y: auto;
+    transform: translateY(20px);
+    transition: transform 0.35s ease;
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal-header {
+    padding: 2rem 2.5rem 1.5rem;
+    border-bottom: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: flex-start;
+  }
+  .modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 400;
+  }
+  .modal-close {
+    background: none; border: none; cursor: pointer;
+    font-size: 1.5rem; color: var(--muted); line-height: 1;
+    padding: 0 0 0 1rem;
+    transition: color 0.2s;
+  }
+  .modal-close:hover { color: var(--ink); }
+  .modal-body { padding: 2rem 2.5rem; }
+  .form-group { margin-bottom: 1.4rem; }
+  .form-label {
+    display: block; font-size: 0.75rem;
+    font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--slate); margin-bottom: 0.5rem;
+  }
+  .form-input, .form-select, .form-textarea {
+    width: 100%; padding: 0.75rem 1rem;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem; color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--gold);
+    background: var(--white);
+  }
+  .form-textarea { resize: vertical; min-height: 80px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-hint { font-size: 0.72rem; color: var(--muted); margin-top: 0.4rem; }
+  .form-section-label {
+    font-size: 0.7rem; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gold); margin: 1.8rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--gold-pale);
+  }
+  .pkg-selector {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;
+    margin-bottom: 1.4rem;
+  }
+  .pkg-option {
+    border: 1px solid var(--line);
+    padding: 0.8rem;
+    cursor: pointer; text-align: center;
+    transition: all 0.2s;
+    background: var(--paper);
+  }
+  .pkg-option:hover { border-color: var(--gold); }
+  .pkg-option.selected { border-color: var(--gold); background: var(--gold-pale); }
+  .pkg-option input { display: none; }
+  .pkg-option-name { font-size: 0.82rem; font-weight: 500; }
+  .pkg-option-price { font-size: 0.72rem; color: var(--muted); margin-top: 0.2rem; }
+  .modal-footer {
+    padding: 1.5rem 2.5rem 2rem;
+    border-top: 1px solid var(--line);
+  }
+  .modal-disclaimer {
+    font-size: 0.72rem; color: var(--muted); line-height: 1.6;
+    margin-bottom: 1.2rem;
+  }
+  .submit-btn {
+    width: 100%;
+    background: var(--gold); color: var(--white);
+    border: none; padding: 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .submit-btn:hover { background: var(--gold-light); }
+  .success-state {
+    text-align: center; padding: 3rem 2rem;
+    display: none;
+  }
+  .success-icon {
+    width: 56px; height: 56px;
+    background: rgba(42,102,69,0.1);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.2rem;
+  }
+  .success-icon svg { width: 24px; height: 24px; color: var(--success); }
+  .success-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 400; margin-bottom: 0.6rem;
+  }
+  .success-body { font-size: 0.85rem; color: var(--slate); line-height: 1.65; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    padding: 3rem 4rem;
+    display: flex; align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 400;
+    color: var(--paper); letter-spacing: 0.06em;
+  }
+  .footer-links {
+    display: flex; gap: 2rem; list-style: none;
+  }
+  .footer-links a {
+    font-size: 0.72rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(248,245,240,0.4);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-disc {
+    font-size: 0.68rem; color: rgba(248,245,240,0.25);
+    max-width: 480px; line-height: 1.6;
+    margin-top: 1rem;
+    flex-basis: 100%;
+    border-top: 1px solid rgba(248,245,240,0.06);
+    padding-top: 1.5rem;
+  }
+
+  /* ── SCROLL ANIMATIONS ── */
+  .reveal { opacity: 0; transform: translateY(24px); }
+  .reveal.visible { animation: fadeUp 0.7s ease forwards; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    nav { padding: 1.2rem 2rem; }
+    nav.scrolled { padding: 0.9rem 2rem; }
+    .hero { padding: 0 2rem 4rem; }
+    .how-it-works, .services, .process, .guarantee,
+    .integration, .faq, .cta-section { padding-left: 2rem; padding-right: 2rem; }
+    .trust-bar { padding: 1.2rem 2rem; gap: 1.5rem; }
+    footer { padding: 2.5rem 2rem; }
+    .int-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .guarantee { flex-direction: column; }
+    .guarantee-card { min-width: unset; width: 100%; max-width: 320px; }
+    .packages-grid { grid-template-columns: 1fr; }
+    .package-card:nth-child(even) { }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    nav.scrolled { padding: 0.8rem 1.5rem; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .hero { padding: 0 1.5rem 3.5rem; }
+    .hero-scroll { display: none; }
+    .how-it-works, .services, .process, .guarantee,
+    .integration, .faq, .cta-section { padding: 4rem 1.5rem; }
+    .trust-bar { padding: 1rem 1.5rem; gap: 1rem; }
+    .trust-sep { display: none; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; }
+    .footer-links { flex-wrap: wrap; gap: 1rem; }
+    .hiw-body { grid-template-columns: 1fr; }
+    .hiw-step:nth-child(even) { border-right: 1px solid var(--line); }
+    .hiw-step:nth-last-child(-n+2) { border-bottom: 1px solid var(--line); }
+    .hiw-step:last-child { border-bottom: none; }
+    .form-row { grid-template-columns: 1fr; }
+    .pkg-selector { grid-template-columns: 1fr; }
+    .modal-body, .modal-footer, .modal-header { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .services-header { flex-direction: column; }
+    .services-note { text-align: left; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-title { font-size: 2.5rem; }
+    .hero-actions { flex-direction: column; align-items: flex-start; }
+    .btn-primary, .btn-ghost { width: 100%; text-align: center; justify-content: center; }
+    .cta-buttons { flex-direction: column; align-items: center; }
+    .cta-buttons .btn-primary { width: 100%; max-width: 300px; justify-content: center; }
+  }
+
+  /* Mobile nav open */
+  .mobile-nav {
+    position: fixed; inset: 0; z-index: 99;
+    background: var(--ink);
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center; gap: 2.5rem;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+  }
+  .mobile-nav.open { opacity: 1; visibility: visible; }
+  .mobile-nav a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 300;
+    color: var(--paper); text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+  .mobile-nav a:hover { color: var(--gold); }
+  .mobile-nav-close {
+    position: absolute; top: 1.5rem; right: 1.5rem;
+    background: none; border: none; cursor: pointer;
+    font-size: 1.8rem; color: var(--paper); line-height: 1;
+  }
+</style>
+</head>
+<body>
+
+<!-- Loader -->
+<div id="loader">
+  <div class="loader-wordmark">Meridian Immigration Law</div>
+  <div class="loader-bar"></div>
+</div>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" id="mobileClose">✕</button>
+  <a href="#services" onclick="closeMobileNav()">Services</a>
+  <a href="#process" onclick="closeMobileNav()">Process</a>
+  <a href="#faq" onclick="closeMobileNav()">FAQ</a>
+  <a href="#" onclick="openModal(); closeMobileNav();">Get Started</a>
+</div>
+
+<!-- Nav -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Meridian</a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#integration">How It Works</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#" class="nav-cta" onclick="openModal()">Get Started</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <p class="hero-eyebrow">Immigration Law — Transparent &amp; Fixed</p>
+  <h1 class="hero-title">Your path to the U.S., <em>clearly priced.</em></h1>
+  <p class="hero-sub">No hidden fees. No billing surprises. Select your service, complete intake, and our attorneys handle the rest — filed within two weeks, guaranteed.</p>
+  <div class="hero-actions">
+    <a href="#services" class="btn-primary">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      View Pricing
+    </a>
+    <a href="#" class="btn-ghost" onclick="openModal()">
+      Schedule Free Consultation
+    </a>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- Trust Bar -->
+<div class="trust-bar">
+  <div class="trust-item">
+    <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+    Fixed Flat Fees
+  </div>
+  <div class="trust-sep"></div>
+  <div class="trust-item">
+    <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+    Filed Within 2 Weeks
+  </div>
+  <div class="trust-sep"></div>
+  <div class="trust-item">
+    <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+    Attorney-Reviewed Docs
+  </div>
+  <div class="trust-sep"></div>
+  <div class="trust-item">
+    <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+    Secure via Docketwise
+  </div>
+  <div class="trust-sep"></div>
+  <div class="trust-item">
+    <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 10l4.553-2.07A1 1 0 0121 8.87V15.13a1 1 0 01-1.447.9L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+    Free 15-Min Consultation
+  </div>
+</div>
+
+<!-- How It Works -->
+<section class="how-it-works" id="howitworks">
+  <div class="hiw-header reveal">
+    <p class="section-label">Simple &amp; Transparent</p>
+    <h2 class="section-title">From selection to <em>filing</em> in four steps</h2>
+  </div>
+  <div class="hiw-body">
+    <div class="hiw-step">
+      <div class="step-num">01</div>
+      <div class="step-title">Choose Your Package</div>
+      <p class="step-body">Select the service that fits your situation — guidance only, attorney-filed, or add individual I-130 petitions à la carte. Transparent pricing, no surprises.</p>
+      <div class="step-badge">À La Carte</div>
+    </div>
+    <div class="hiw-step">
+      <div class="step-num">02</div>
+      <div class="step-title">Complete Secure Intake</div>
+      <p class="step-body">Our Docketwise-powered intake questionnaire collects everything needed. Multilingual support available. A fee agreement is auto-generated and sent for your review.</p>
+      <div class="step-badge">Powered by Docketwise</div>
+    </div>
+    <div class="hiw-step">
+      <div class="step-num">03</div>
+      <div class="step-title">Free Consultation Call</div>
+      <p class="step-body">A 15-minute Zoom or phone call with your attorney confirms document adequacy and formally initiates your engagement. Payment is processed at this stage.</p>
+      <div class="step-badge">Free · 15 Minutes</div>
+    </div>
+    <div class="hiw-step">
+      <div class="step-num">04</div>
+      <div class="step-title">Filed Within 2 Weeks</div>
+      <p class="step-body">Once we have all documents from you, we guarantee filing within 14 calendar days. Need it faster? Expedited processing is available for an additional fee.</p>
+      <div class="step-badge">Guaranteed</div>
+    </div>
+  </div>
+</section>
+
+<!-- Services / Pricing -->
+<section class="services" id="services">
+  <div class="services-header reveal">
+    <div>
+      <p class="section-label">Flat-Fee Services</p>
+      <h2 class="section-title">Choose what you <em>need</em></h2>
+    </div>
+    <p class="services-note">Government filing fees are separate and vary by petition type. Either the client or attorney files, depending on the package selected.</p>
+  </div>
+
+  <div class="packages-grid">
+    <!-- Package 1 -->
+    <div class="package-card" style="animation-delay:0.1s">
+      <p class="pkg-label">Guidance Package</p>
+      <h3 class="pkg-name">Attorney-Prepared Guidance</h3>
+      <p style="font-size:0.82rem;color:var(--muted);font-weight:300;line-height:1.6;">Attorney-reviewed and prepared guidance for family petitions. You file the documents with our complete, step-by-step support.</p>
+      <div class="pkg-price"><sup>$</sup>1,000</div>
+      <p class="pkg-price-range">Starting from — up to $1,500</p>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-features">
+        <li>
+          <svg class="chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Attorney reviews your case documents
+        </li>
+        <li>
+          <svg class="chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Prepares completed petition forms
+        </li>
+        <li>
+          <svg class="chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Filing instructions included
+        </li>
+        <li>
+          <svg class="chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          <em>You</em> submit to USCIS
+        </li>
+        <li>
+          <svg class="chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          15-min onboarding consultation
+        </li>
+      </ul>
+      <button class="pkg-cta pkg-cta-outline" onclick="openModal('guidance')">Select Package</button>
+    </div>
+
+    <!-- Package 2 – Featured -->
+    <div class="package-card featured">
+      <div class="package-badge">Most Popular</div>
+      <p class="pkg-label">Full-Service Package</p>
+      <h3 class="pkg-name">Attorney-Filed</h3>
+      <p style="font-size:0.82rem;color:rgba(248,245,240,0.55);font-weight:300;line-height:1.6;">We handle everything — prepared, reviewed, and filed by your attorney. Hands-off from start to submission.</p>
+      <div class="pkg-price"><sup>$</sup>2,000</div>
+      <p class="pkg-price-range">Starting from — up to $2,500</p>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-features">
+        <li>
+          <svg class="chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Everything in Guidance package
+        </li>
+        <li>
+          <svg class="chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Attorney files on your behalf
+        </li>
+        <li>
+          <svg class="chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Case tracking via client portal
+        </li>
+        <li>
+          <svg class="chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Secure document sharing
+        </li>
+        <li>
+          <svg class="chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Auto-generated fee agreement
+        </li>
+        <li>
+          <svg class="chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          2-week filing guarantee
+        </li>
+      </ul>
+      <button class="pkg-cta pkg-cta-solid" onclick="openModal('filed')">Select Package</button>
+    </div>
+
+    <!-- Package 3 -->
+    <div class="package-card" style="animation-delay:0.2s">
+      <p class="pkg-label">Additional Petitions</p>
+      <h3 class="pkg-name">Individual I-130 Add-On</h3>
+      <p style="font-size:0.82rem;color:var(--muted);font-weight:300;line-height:1.6;">Each additional I-130 petition filed separately, in addition to your primary package. Price is per petition.</p>
+      <div class="pkg-price"><sup>$</sup>500</div>
+      <p class="pkg-price-range">Per additional I-130 petition</p>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-features">
+        <li>
+          <svg class="chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          One separate I-130 per add-on
+        </li>
+        <li>
+          <svg class="chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Requires a primary package
+        </li>
+        <li>
+          <svg class="chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Prepared by same attorney
+        </li>
+        <li>
+          <svg class="chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Add multiple petitions as needed
+        </li>
+        <li>
+          <svg class="chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Included in 2-week guarantee
+        </li>
+      </ul>
+      <button class="pkg-cta pkg-cta-outline" onclick="openModal('i130')">Add to Package</button>
+    </div>
+  </div>
+
+  <!-- Add-ons -->
+  <div class="addons reveal">
+    <div class="addons-title">Optional Add-Ons</div>
+    <div class="addons-grid">
+      <div class="addon-item">
+        <span class="addon-name">Expedited Firm Processing</span>
+        <span class="addon-price">+$500</span>
+      </div>
+      <div class="addon-item">
+        <span class="addon-name">Each Additional I-130</span>
+        <span class="addon-price">+$500</span>
+      </div>
+      <div class="addon-item">
+        <span class="addon-name">Government Filing Fees</span>
+        <span class="addon-price">Separate</span>
+      </div>
+      <div class="addon-item">
+        <span class="addon-name">Initial Consultation</span>
+        <span class="addon-price">Free</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Process Timeline -->
+<section class="process" id="process">
+  <div class="process-inner">
+    <div class="process-header reveal">
+      <p class="section-label">Client Journey</p>
+      <h2 class="section-title">Every detail, <em>accounted for</em></h2>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"><span class="tl-dot-num">1</span></div>
+        <div class="tl-content">
+          <div class="tl-title">Select Your Service Online</div>
+          <p class="tl-body">Browse our à la carte menu, choose your package, and add I-130 petitions as needed. Your total is shown upfront — no consultations required before pricing.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"><span class="tl-dot-num">2</span></div>
+        <div class="tl-content">
+          <div class="tl-title">Complete Docketwise Intake Questionnaire</div>
+          <p class="tl-body">We send you a secure, multilingual intake questionnaire via Docketwise. Complete it from any device. A fee agreement is auto-populated and sent to you for e-signature.</p>
+          <div class="tl-tag">Docketwise-Powered</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"><span class="tl-dot-num">3</span></div>
+        <div class="tl-content">
+          <div class="tl-title">Provide Payment Information</div>
+          <p class="tl-body">Securely submit your payment details through our intake form. Payments are processed manually by our office after your free consultation confirms the engagement.</p>
+          <div class="tl-tag">Manual Processing</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"><span class="tl-dot-num">4</span></div>
+        <div class="tl-content">
+          <div class="tl-title">Free 15-Minute Consultation</div>
+          <p class="tl-body">Your attorney reviews submitted documents on a brief Zoom or phone call. This call formally initiates your engagement and confirms adequacy of your supporting materials.</p>
+          <div class="tl-tag">Zoom or Phone · Free</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"><span class="tl-dot-num">5</span></div>
+        <div class="tl-content">
+          <div class="tl-title">Document Collection &amp; Preparation</div>
+          <p class="tl-body">Upload all required documents through your secure Docketwise client portal. The attorney prepares and reviews all petition forms and supporting materials.</p>
+          <div class="tl-tag">Secure Portal Upload</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"><span class="tl-dot-num">6</span></div>
+        <div class="tl-content">
+          <div class="tl-title">Filed Within Two Weeks — Guaranteed</div>
+          <p class="tl-body">Once we have all required documents, your matter is filed within 14 calendar days. Expedited processing available for an additional $500 if you need it sooner.</p>
+          <div class="tl-tag">2-Week Guarantee</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Guarantee -->
+<section class="guarantee">
+  <div class="guarantee-left reveal">
+    <p class="guarantee-eyebrow">Our Commitment</p>
+    <h2 class="guarantee-title">We guarantee your matter<br>is filed in <em style="color:var(--gold-light)">two weeks.</em></h2>
+    <p class="guarantee-body">From the moment we receive all required documents from you, our team commits to filing within 14 calendar days. Need it faster? Expedited processing is available for an additional $500 and moves your matter to the front of the queue.</p>
+  </div>
+  <div class="guarantee-card reveal">
+    <div class="g-number">14</div>
+    <div class="g-label">Day Filing Guarantee</div>
+    <div style="height:1px;background:rgba(248,245,240,0.08);margin:1.5rem 0"></div>
+    <div class="g-number" style="font-size:2.5rem;">$500</div>
+    <div class="g-label">Expedited Processing Option</div>
+  </div>
+</section>
+
+<!-- Docketwise Integration -->
+<section class="integration" id="integration">
+  <div class="int-inner">
+    <div class="int-visual reveal">
+      <div class="int-mockup">
+        <div class="mock-bar">
+          <div class="mock-dot"></div>
+          <div class="mock-dot"></div>
+          <div class="mock-dot"></div>
+        </div>
+        <div class="mock-steps">
+          <div class="mock-step active"></div>
+          <div class="mock-step active"></div>
+          <div class="mock-step"></div>
+          <div class="mock-step"></div>
+        </div>
+        <div class="mock-row full"></div>
+        <div class="mock-row med"></div>
+        <div class="mock-row short"></div>
+        <div style="height:1rem"></div>
+        <div class="mock-row full"></div>
+        <div class="mock-row gold"></div>
+        <div class="mock-row med"></div>
+        <div style="height:0.5rem"></div>
+        <div class="mock-row full"></div>
+        <div class="mock-row short"></div>
+      </div>
+      <div class="int-badge">Powered by Docketwise</div>
+    </div>
+    <div class="int-content">
+      <p class="section-label">Seamless Technology</p>
+      <h2 class="section-title">Your case managed<br>with <em>precision</em></h2>
+      <p class="int-body">We use Docketwise — the leading immigration case management platform — for secure intake, document sharing, fee agreements, and client communication. Everything lives in one place, accessible from any device.</p>
+      <div class="int-features">
+        <div class="int-feature">
+          <div class="int-feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          </div>
+          Auto-Generated &amp; E-Signed Fee Agreements
+        </div>
+        <div class="int-feature">
+          <div class="int-feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+          </div>
+          Secure Document Upload &amp; Sharing
+        </div>
+        <div class="int-feature">
+          <div class="int-feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          Multilingual Intake Questionnaires
+        </div>
+        <div class="int-feature">
+          <div class="int-feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+          </div>
+          Automated Case Status Notifications
+        </div>
+        <div class="int-feature">
+          <div class="int-feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+          </div>
+          Client Portal with Invoice &amp; Payment Access
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="faq-inner">
+    <div class="faq-header reveal">
+      <p class="section-label">Common Questions</p>
+      <h2 class="section-title">Everything you need <em>to know</em></h2>
+    </div>
+    <div id="faqList">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          When is my engagement formally started?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><p class="faq-a-inner">Your engagement is formally initiated after your free 15-minute consultation call with your attorney. During this call, the attorney confirms that your documents are adequate to proceed. Payment is then collected by our office to activate the matter.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What are government filing fees, and are they included?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><p class="faq-a-inner">Government (USCIS) filing fees are separate from our flat attorney fees. They vary by petition type and are paid directly to USCIS. We'll provide you with a complete breakdown of all applicable filing fees during your consultation call so there are no surprises.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What does the 2-week filing guarantee mean exactly?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><p class="faq-a-inner">Once our office has received all required documents from you, we guarantee your matter will be filed within 14 calendar days. The clock starts when we have everything we need — not when you first contact us. If you need faster processing, our expedited option ($500 add-on) moves your matter to priority status.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          How do I pay, and when is payment collected?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><p class="faq-a-inner">You provide payment information during the intake process. However, your payment is processed manually by our office — only after your free 15-minute consultation confirms the adequacy of your documents and formally initiates your engagement. We handle all payment collection; no payments are taken automatically through the website.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What if I need multiple I-130 petitions?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><p class="faq-a-inner">Each separate I-130 petition is $500 in addition to your primary package. There is no limit to how many you can add. All petitions are covered by the same 2-week filing guarantee and are handled by the same attorney overseeing your case.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What is Docketwise and how does it protect my information?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><p class="faq-a-inner">Docketwise is the leading immigration-specific case management platform, trusted by over 10,000 immigration firms. It uses 256-bit encryption for all data transmission and storage. Your intake questionnaire, documents, fee agreement, and case communication all live securely in your private client portal — accessible only by you and your attorney.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Do you guarantee approval of my petition?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><p class="faq-a-inner">No attorney can guarantee USCIS approval, as outcomes depend on facts, evidence, and government discretion. We guarantee our process: thorough preparation, timely filing, and attorney review of every matter. Our flat-fee structure aligns our interests with yours — we succeed when your case is well-prepared.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <p class="cta-label reveal">Ready to Begin</p>
+  <h2 class="cta-title reveal">Start your immigration<br>matter <em>today.</em></h2>
+  <p class="cta-sub reveal">Select your service, complete intake, and meet your attorney — all online. Fixed fees. No surprises.</p>
+  <div class="cta-buttons reveal">
+    <a href="#" class="btn-primary" onclick="openModal()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+      Get Started Now
+    </a>
+    <a href="#services" class="btn-ghost" style="color:var(--slate);border-color:var(--line);">View All Pricing</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">Meridian Immigration Law</div>
+  <ul class="footer-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#" onclick="openModal()">Get Started</a></li>
+  </ul>
+  <p class="footer-disc">This website is for informational purposes only and does not constitute legal advice. Use of this site does not create an attorney-client relationship. An attorney-client relationship is only formed upon execution of a signed fee agreement and completion of the initial consultation. Government filing fees are not included in quoted attorney fees and are billed separately.</p>
+</footer>
+
+<!-- MODAL: Intake & Onboarding -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <div>
+        <p style="font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:0.3rem">Client Intake</p>
+        <h3 class="modal-title">Begin Your Matter</h3>
+      </div>
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+    </div>
+    <div id="modalFormContent">
+      <div class="modal-body">
+        <p style="font-size:0.82rem;color:var(--slate);line-height:1.65;margin-bottom:1.5rem;font-weight:300;">Complete this form to begin. We will send your Docketwise intake questionnaire and fee agreement by email. Your engagement is formally initiated only after your free 15-minute consultation call.</p>
+
+        <!-- Package Selection -->
+        <p class="form-section-label">Select Your Package</p>
+        <div class="pkg-selector" id="pkgSelector">
+          <label class="pkg-option selected" onclick="selectPkg(this)">
+            <input type="radio" name="pkg" value="guidance" checked>
+            <div class="pkg-option-name">Guidance Only</div>
+            <div class="pkg-option-price">$1,000 – $1,500</div>
+          </label>
+          <label class="pkg-option" onclick="selectPkg(this)">
+            <input type="radio" name="pkg" value="filed">
+            <div class="pkg-option-name">Attorney-Filed</div>
+            <div class="pkg-option-price">$2,000 – $2,500</div>
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Additional I-130 Petitions</label>
+          <select class="form-select" id="i130Count">
+            <option value="0">None</option>
+            <option value="1">1 Additional I-130 (+$500)</option>
+            <option value="2">2 Additional I-130s (+$1,000)</option>
+            <option value="3">3 Additional I-130s (+$1,500)</option>
+            <option value="4">4+ I-130s (we'll confirm pricing)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Expedited Processing</label>
+          <select class="form-select" id="expedited">
+            <option value="no">No — standard 2-week processing</option>
+            <option value="yes">Yes — Expedited (+$500)</option>
+          </select>
+        </div>
+
+        <!-- Contact Info -->
+        <p class="form-section-label">Your Information</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-input" id="firstName" placeholder="Maria" autocomplete="given-name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-input" id="lastName" placeholder="Garcia" autocomplete="family-name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-input" id="email" placeholder="maria@email.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input type="tel" class="form-input" id="phone" placeholder="+1 (555) 000-0000" autocomplete="tel">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Preferred Consultation Method</label>
+          <select class="form-select" id="consult">
+            <option value="zoom">Zoom Video Call</option>
+            <option value="phone">Phone Call</option>
+          </select>
+        </div>
+
+        <!-- Brief Case Info -->
+        <p class="form-section-label">Brief Case Overview</p>
+        <div class="form-group">
+          <label class="form-label">Petition Type</label>
+          <select class="form-select" id="petitionType">
+            <option value="">Select petition type</option>
+            <option value="i130-spouse">I-130 — Spouse of U.S. Citizen</option>
+            <option value="i130-parent">I-130 — Parent of U.S. Citizen</option>
+            <option value="i130-child">I-130 — Child of U.S. Citizen</option>
+            <option value="i130-sibling">I-130 — Sibling of U.S. Citizen</option>
+            <option value="i130-lpr">I-130 — Family of LPR</option>
+            <option value="other">Other (describe below)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Additional Notes <span style="text-transform:none;font-weight:300;color:var(--muted)">(optional)</span></label>
+          <textarea class="form-textarea" id="notes" placeholder="Briefly describe your situation or any questions you have..."></textarea>
+        </div>
+
+        <!-- Payment Info -->
+        <p class="form-section-label">Payment Information</p>
+        <p style="font-size:0.78rem;color:var(--muted);margin-bottom:1rem;line-height:1.6;">Payment is collected manually by our office after your consultation confirms the engagement. Please provide card details so we can process promptly.</p>
+        <div class="form-group">
+          <label class="form-label">Name on Card</label>
+          <input type="text" class="form-input" id="cardName" placeholder="Maria Garcia" autocomplete="cc-name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Card Number</label>
+          <input type="text" class="form-input" id="cardNum" placeholder="•••• •••• •••• ••••" maxlength="19" oninput="formatCard(this)" autocomplete="cc-number">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Expiry Date</label>
+            <input type="text" class="form-input" id="cardExpiry" placeholder="MM / YY" maxlength="7" oninput="formatExpiry(this)" autocomplete="cc-exp">
+          </div>
+          <div class="form-group">
+            <label class="form-label">CVV</label>
+            <input type="text" class="form-input" id="cardCvv" placeholder="•••" maxlength="4" autocomplete="cc-csc">
+          </div>
+        </div>
+        <p class="form-hint">Your payment information is stored securely. No charges are made without your explicit authorization following your consultation call.</p>
+      </div>
+      <div class="modal-footer">
+        <p class="modal-disclaimer">By submitting this form, you acknowledge that no attorney-client relationship is created until you have signed a fee agreement and completed your initial consultation. Government filing fees are billed separately.</p>
+        <button class="submit-btn" onclick="submitForm()">
+          Submit &amp; Schedule Consultation →
+        </button>
+      </div>
+    </div>
+    <!-- Success state -->
+    <div class="success-state" id="successState">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+      <div class="success-title">You're on your way.</div>
+      <p class="success-body">We've received your intake information. Check your email within one business day — you'll receive your Docketwise intake questionnaire, fee agreement, and a link to schedule your free 15-minute consultation.</p>
+      <div style="margin-top:1.5rem;padding:1rem;background:var(--gold-pale);font-size:0.8rem;color:var(--slate);line-height:1.6;">
+        <strong style="color:var(--gold)">What happens next:</strong><br>
+        1. Check email for Docketwise onboarding link<br>
+        2. Complete multilingual intake questionnaire<br>
+        3. Sign fee agreement electronically<br>
+        4. Schedule your free 15-min consultation call
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── LOADER
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('loader').classList.add('hidden');
+    }, 1800);
+  });
+
+  // ── NAVBAR
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // ── MOBILE NAV
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('mobileNav').classList.add('open');
+  });
+  document.getElementById('mobileClose').addEventListener('click', closeMobileNav);
+  function closeMobileNav() {
+    document.getElementById('mobileNav').classList.remove('open');
+  }
+
+  // ── SCROLL REVEAL
+  const revealEls = document.querySelectorAll('.reveal, .hiw-step, .tl-item, .package-card, .faq-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const delay = el.classList.contains('tl-item') ? 0 :
+                      (Array.from(el.parentNode.children).indexOf(el) * 100);
+        setTimeout(() => {
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+          el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+        }, delay);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // ── FAQ
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // ── MODAL
+  function openModal(pkg) {
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    if (pkg) {
+      document.querySelectorAll('.pkg-option').forEach(opt => {
+        opt.classList.remove('selected');
+        if (opt.querySelector('input').value === pkg ||
+           (pkg === 'i130' && opt.querySelector('input').value === 'filed')) {
+          opt.classList.add('selected');
+        }
+      });
+    }
+  }
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('modalOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  // ── PACKAGE SELECT
+  function selectPkg(el) {
+    document.querySelectorAll('.pkg-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  // ── CARD FORMATTING
+  function formatCard(input) {
+    let v = input.value.replace(/\D/g, '').substring(0, 16);
+    input.value = v.replace(/(.{4})/g, '$1 ').trim();
+  }
+  function formatExpiry(input) {
+    let v = input.value.replace(/\D/g, '').substring(0, 4);
+    if (v.length >= 2) v = v.substring(0,2) + ' / ' + v.substring(2);
+    input.value = v;
+  }
+
+  // ── SUBMIT
+  function submitForm() {
+    const req = ['firstName','lastName','email','phone','petitionType'];
+    let valid = true;
+    req.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) {
+        el.style.borderColor = '#e74c3c';
+        valid = false;
+        setTimeout(() => el.style.borderColor = '', 3000);
+      }
+    });
+    if (!valid) {
+      const firstErr = document.querySelector('[style*="e74c3c"]');
+      if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    // In production: send to backend / Docketwise webhook via Zapier
+    document.getElementById('modalFormContent').style.display = 'none';
+    document.getElementById('successState').style.display = 'block';
+  }
+
+  // ── SMOOTH NAV
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
